@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en" ng-app="indexApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Angular Crud</title>
+    <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" media="screen">
+</head>
+<body>
+<div class="container" ng-controller="indexCtrl">
+    <h1>{{studentForm}}</h1>
+    <form name="myForm">
+        <div class="form-group">
+            <label for="inputName">Name</label>
+            <input type="text" name="firstName" class="form-control" id="inputName" placeholder="Name" ng-model="student.firstName" ng-minlength="5" required>
+            <span ng-show="myForm.firstName.$error.required">Name is required</span>
+            <span ng-show="myForm.firstName.$error.minlength">Minlength 5 is required</span>
+        </div>
+        <div class="form-group">
+            <label for="inputEmail">Email</label>
+            <input type="email" name="emailValue" class="form-control" id="inputEmail" placeholder="Email" ng-model="student.emailValue" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$">
+            <span ng-show="myForm.emailValue.$error.required">Email is required</span>
+            <span ng-show="myForm.emailValue.$error.pattern">Not a valid email</span>
+        </div>
+        <div class="form-group">
+            <label for="inputPassword">Password</label>
+            <input type="password" name="passwordValue" ng-model="student.passwordValue" class="form-control" id="inputPassword" placeholder="Password" required pattern="?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
+            <span ng-show="myForm.passwordValue.$error.required">Password is required</span>
+            <span ng-show="myForm.passwordValue.$error.pattern">Please enter </span>
+        </div>
+        <div class="form-group">
+            <label for="inputGender">Gender</label>
+            <select name="selectedGen" id="inputGender" class="form-control" ng-model="student.selectedGen">
+                <option ng-repeat="gen in gender">{{gen}}</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary" ng-disabled="myForm.$invalid || myForm.$pending" ng-click="saveFunc()">Save</button>
+    </form>
+
+    <div ng-show="studentArr.length > 0 ">
+        <h1>Information of students</h1>
+        <table class="table table-striped table-bordered" width="100%">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Gender</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="student in studentArr">
+                <td ng-show="viewField">{{student.firstName}}</td>
+                <td ng-show="editField">
+                    <input type="text" name="firstName" class="form-control" placeholder="Name" ng-model="student.firstName" ng-minlength="5" required>
+                </td>
+
+                <td ng-show="viewField">{{student.emailValue}}</td>
+                <td ng-show="editField">
+                    <input type="email" name="emailValue" class="form-control" placeholder="Email" ng-model="student.emailValue" ng-minlength="5" required>
+                </td>
+
+                <td ng-show="viewField">{{student.selectedGen}}</td>
+                <td ng-show="editField">
+                    <label for="inputGender">Gender</label>
+                    <select name="selectedGen" class="form-control" ng-model="student.selectedGen">
+                        <option ng-repeat="gen in gender">{{gen}}</option>
+                    </select>
+                </td>
+                <td ng-show="viewField">
+                    <button type="submit" class="btn btn-danger" ng-click="onDelFunc($index)">Delete</button>
+                    <button type="submit" class="btn btn-primary" ng-click="onEditFunc(student)">Edit</button>
+                </td>
+                <td ng-show="editField">
+                    <button type="submit" class="btn btn-danger" ng-click="onDelFunc($index)">Delete</button>
+                    <button type="submit" class="btn btn-secondary" ng-click="onUpdateFunc()">Update</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!--<form name="updateForm" ng-show="updateView">-->
+        <!--<div class="form-group">-->
+            <!--<label for="updateName">Name</label>-->
+            <!--<input type="text" name="updateName" class="form-control" id="updateName" placeholder="Name" ng-model="student.updateName" ng-minlength="5" required>-->
+            <!--<span ng-show="updateForm.updateName.$error.required">Name is required</span>-->
+            <!--<span ng-show="updateForm.updateName.$error.minlength">Minlength 5 is required</span>-->
+        <!--</div>-->
+        <!--<button type="submit" class="btn btn-primary" ng-disabled="updateForm.$invalid || updateForm.$pending" ng-click="saveFunc()">Save</button>-->
+    <!--</form>-->
+
+</div>
+<script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="node_modules/angular/angular.min.js"></script>
+<script src="node_modules/jquery/dist/jquery.min.js"></script>
+<script src="js/index.js"></script>
+</body>
+</html>
