@@ -1,4 +1,4 @@
-var app = angular.module('indexApp',['commonService', 'ui.router']);
+var app = angular.module('indexApp',['commonService']);
 app.controller('indexCtrl', ['$scope', 'indexService', function($scope, $indexService) {
     $scope.studentHeading = "Please fill the informations"; // Form Heading
     $scope.student = {};

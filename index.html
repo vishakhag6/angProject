@@ -64,7 +64,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="student in studentArr | filter : nameFilter.index">
+            <tr ng-repeat="student in studentArr | filter : nameFilter">
                 <td>{{student.index+1}}</td>
                 <td>{{student.firstName}}</td>
                 <td>{{student.emailValue}}</td>
@@ -81,7 +81,6 @@
 
 </div>
 <script src="node_modules/angular/angular.min.js"></script>
-<script src="/node_modules/@uirouter/core/lib/router.js"></script>
 <script src="node_modules/jquery/dist/jquery.min.js"></script>
 <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="js/indexService.js"></script>
