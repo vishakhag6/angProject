@@ -1,35 +1,65 @@
-var app = angular.module('indexApp',[]);
-app.controller('indexCtrl', function($scope) {
-    $scope.studentForm = "Please fill the informations";
-    $scope.isUpdate = true;
-    $scope.viewField = true;
-    $scope.editField = false;
+var app = angular.module('indexApp',['commonService', 'ui.router']);
+app.controller('indexCtrl', ['$scope', 'indexService', function($scope, $indexService) {
+    $scope.studentHeading = "Please fill the informations"; // Form Heading
     $scope.student = {};
-    $scope.studentUpdate = {};
     $scope.studentArr = [];
-    $scope.studentUpdateArr = [];
+    var studentUpdate = {};
+    $scope.booleanObj = {
+        showSaveBtn : true,
+        showUpdateBtn : false,
+        showCancelBtn : false,
+        showEditBtn : true,
+        showDeleteBtn : true
+    }
+    $scope.gender = [ "female", "male"]; // Select array
 
-    $scope.gender = ["female", "male"];
+    // Save functionality
     $scope.saveFunc = function(){
-        $scope.studentArr.push($scope.student);
+        $scope.studentArr = $indexService.save($scope.studentArr, $scope.student);
         $scope.student = {};
+        console.log($scope.studentArr);
     }
 
-    $scope.onDelFunc = function(index) {
-        $scope.studentArr.splice(index, 1);
+    // Delete functionality
+    $scope.deleteFunc = function(index){
+        $scope.studentArr = $indexService.delete($scope.studentArr, index);
     }
 
+    // Edit functionality
     $scope.onEditFunc = function(student) {
-        $scope.viewField = !$scope.viewField;
-        $scope.editField = !$scope.editField;
-        $scope.studentUpdate = angular.copy(student);
+        studentUpdate = angular.copy(student);
+        $scope.student = studentUpdate;
+        $scope.booleanObj = {
+            showSaveBtn : false,
+            showUpdateBtn : true,
+            showCancelBtn : true,
+            showEditBtn : false,
+            showDeleteBtn : false
+        }
+    }
+
+    // Update functionality
+    $scope.updateFunc = function(student) {
+        $scope.studentArr = $indexService.update($scope.studentArr, student);
         $scope.student = {};
-        console.log(student);
+        $scope.booleanObj = {
+            showSaveBtn : true,
+            showUpdateBtn : false,
+            showCancelBtn : false,
+            showEditBtn : true,
+            showDeleteBtn : true
+        }
     }
-    
-    $scope.onUpdateFunc = function () {
-        $scope.viewField = !$scope.viewField;
-        $scope.editField = !$scope.editField;
-        $scope.studentUpdateArr.push($scope.studentUpdate);
+
+    // Cancel functionality
+    $scope.onCancelFunc = function() {
+        $scope.student = {};
+        $scope.booleanObj = {
+            showSaveBtn : true,
+            showUpdateBtn : false,
+            showCancelBtn : false,
+            showEditBtn : true,
+            showDeleteBtn : true
+        }
     }
-});
+}]);

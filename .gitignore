@@ -1,0 +1,18 @@
+#ignore files with ~ at the end
+*~
+
+node_modules/
+
+#ignore db folder
+db/
+
+#ignore any log files
+*.log
+
+#ignore phpstorm files 
+.idea/
+
+.DS_Store
+*.DS_Store
+*.lib
+
