@@ -10,20 +10,25 @@ app.controller('indexCtrl', ['$scope', 'indexService', function($scope, $indexSe
         showCancelBtn : false,
         showEditBtn : true,
         showDeleteBtn : true
-    }
+    };
+	$scope.searchText = "";
+
     $scope.gender = [ "female", "male"]; // Select array
+
+	$scope.userObj2 = {
+		"key" : "index key value"
+	};
 
     // Save functionality
     $scope.saveFunc = function(){
         $scope.studentArr = $indexService.save($scope.studentArr, $scope.student);
         $scope.student = {};
-        console.log($scope.studentArr);
-    }
+    };
 
     // Delete functionality
     $scope.deleteFunc = function(index){
         $scope.studentArr = $indexService.delete($scope.studentArr, index);
-    }
+    };
 
     // Edit functionality
     $scope.onEditFunc = function(student) {
@@ -35,8 +40,8 @@ app.controller('indexCtrl', ['$scope', 'indexService', function($scope, $indexSe
             showCancelBtn : true,
             showEditBtn : false,
             showDeleteBtn : false
-        }
-    }
+        };
+    };
 
     // Update functionality
     $scope.updateFunc = function(student) {
@@ -48,8 +53,8 @@ app.controller('indexCtrl', ['$scope', 'indexService', function($scope, $indexSe
             showCancelBtn : false,
             showEditBtn : true,
             showDeleteBtn : true
-        }
-    }
+        };
+    };
 
     // Cancel functionality
     $scope.onCancelFunc = function() {
@@ -60,6 +65,15 @@ app.controller('indexCtrl', ['$scope', 'indexService', function($scope, $indexSe
             showCancelBtn : false,
             showEditBtn : true,
             showDeleteBtn : true
-        }
-    }
+        };
+    };
+
+    // Search on the basis of name and email only
+	$scope.search = function(item) {
+		if(item.firstName.indexOf($scope.searchText) !== -1 ||
+			item.emailValue.indexOf($scope.searchText) !== -1) {
+			return true;
+		}
+	};
 }]);
+
