@@ -81,7 +81,7 @@ app.controller('indexCtrl', ['$scope', 'indexService', '$timeout', function($sco
 
     // Search on the basis of name and email only
 	$scope.search = function(item) {
-		if(item.firstName.indexOf($scope.searchText) !== -1 ||
+		if((item.firstName.toLowerCase()).indexOf($scope.searchText.toLowerCase()) !== -1 ||
 			item.emailValue.indexOf($scope.searchText) !== -1) {
 			return true;
 		}

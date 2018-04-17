@@ -23,6 +23,3 @@ app.service('indexService', function() {
         return tempArr;
     }
 });
-
-
-
