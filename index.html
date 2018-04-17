@@ -11,7 +11,7 @@
 </head>
 <body ng-controller="indexCtrl">
 <div class="container">
-    <h1 ng-cloak>{{studentHeading}}</h1>
+    <h1 ng-bind="mainHeadingMessage"></h1>
     <form name="myForm" class="form-group" ng-cloak>
         <div class="form-group">
             <label for="inputName">Name</label>

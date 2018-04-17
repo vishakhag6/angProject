@@ -16,3 +16,6 @@ db/
 *.DS_Store
 *.lib
 
+/.idea/
+.idea/workspace.xml
+

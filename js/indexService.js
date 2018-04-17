@@ -1,6 +1,9 @@
 var app = angular.module('commonService',[]);
 app.service('indexService', function() {
 
+    // main heading(for data sharing)
+	this.mainHeading = "Please fill the informations";
+
     // Save service
     this.save = function(tempArr, tempObj){
         tempObj.index = tempArr.length;

@@ -1,6 +1,7 @@
 var app = angular.module('indexApp',['commonService']);
 app.controller('indexCtrl', ['$scope', 'indexService', '$timeout', function($scope, $indexService, $timeout) {
-    $scope.studentHeading = "Please fill the informations"; // Form Heading
+
+	$scope.mainHeadingMessage = $indexService.mainHeading; // Heading form service(data sharing)
     $scope.student = {};
     $scope.studentArr = [];
     var studentUpdate = {};
