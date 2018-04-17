@@ -25,10 +25,14 @@ app.controller('indexCtrl', ['$scope', 'indexService', function($scope, $indexSe
         $scope.student = {};
     };
 
-    // Delete functionality
-    $scope.deleteFunc = function(index){
-        $scope.studentArr = $indexService.delete($scope.studentArr, index);
-    };
+	// Delete functionality(On the basis of Modal)
+	$scope.showDeleteModal = function(index){
+		$('#deleteModal').modal();
+
+		$scope.deleteFunc = function(){
+			$scope.studentArr = $indexService.delete($scope.studentArr, index);
+		};
+	};
 
     // Edit functionality
     $scope.onEditFunc = function(student) {

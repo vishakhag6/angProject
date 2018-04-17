@@ -9,27 +9,27 @@
     <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link rel="stylesheet" href="./style.css">
 </head>
-<body>
-<div class="container" ng-controller="indexCtrl">
+<body ng-controller="indexCtrl">
+<div class="container">
     <h1>{{studentHeading}}</h1>
     <form name="myForm">
         <div class="form-group">
             <label for="inputName">Name</label>
             <input type="text" name="firstName" class="form-control" id="inputName" placeholder="Name" ng-model="student.firstName" ng-minlength="5" required>
-            <span ng-show="myForm.firstName.$error.required">Name is required</span>
-            <span ng-show="myForm.firstName.$error.minlength">Minlength 5 is required</span>
+            <span class="text-danger" ng-show="myForm.firstName.$error.required">Name is required</span>
+            <span class="text-danger" ng-show="myForm.firstName.$error.minlength">Minlength 5 is required</span>
         </div>
         <div class="form-group">
             <label for="inputEmail">Email</label>
             <input type="email" name="emailValue" class="form-control" id="inputEmail" placeholder="Email" ng-model="student.emailValue" required>
-            <span ng-show="myForm.emailValue.$error.required">Email is required</span>
-            <span ng-show="myForm.emailValue.$error.pattern">Not a valid email</span>
+            <span class="text-danger" ng-show="myForm.emailValue.$error.required">Email is required</span>
+            <span class="text-danger" ng-show="myForm.emailValue.$error.pattern">Not a valid email</span>
         </div>
         <div class="form-group">
             <label for="inputPassword">Password</label>
             <input type="password" name="passwordValue" ng-model="student.passwordValue" class="form-control" id="inputPassword" placeholder="Password" required>
-            <span ng-show="myForm.passwordValue.$error.required">Password is required</span>
-            <span ng-show="myForm.passwordValue.$error.pattern">Please enter </span>
+            <span class="text-danger" ng-show="myForm.passwordValue.$error.required">Password is required</span>
+            <span class="text-danger" ng-show="myForm.passwordValue.$error.pattern">Please enter </span>
         </div>
         <div class="form-group">
             <label>Gender</label>
@@ -70,13 +70,31 @@
                 <td>{{student.emailValue}}</td>
                 <td>{{student.selectedGen}}</td>
                 <td>
-                    <button type="submit" class="btn btn-danger" ng-show="booleanObj.showDeleteBtn" ng-click="deleteFunc($index)">Delete</button>
+                    <button type="submit" class="btn btn-danger" data-toggle="modal"
+                            ng-show="booleanObj.showDeleteBtn" ng-click="showDeleteModal($index)">Delete</button>
                     <button type="submit" ng-show="booleanObj.showEditBtn" class="btn btn-primary" ng-click="onEditFunc(student)">Edit</button>
                     <button type="submit" ng-show="booleanObj.showCancelBtn" class="btn btn-info" ng-click="onCancelFunc()">Cancel</button>
                 </td>
             </tr>
             </tbody>
         </table>
+    </div>
+</div>
+
+<!-- Modal -->
+<div id="deleteModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Do you want to Delete?</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="deleteFunc()">Yes</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+            </div>
+        </div>
     </div>
 </div>
 
