@@ -1,5 +1,5 @@
 var app = angular.module('indexApp',['commonService']);
-app.controller('indexCtrl', ['$scope', 'indexService', function($scope, $indexService) {
+app.controller('indexCtrl', ['$scope', 'indexService', '$timeout', function($scope, $indexService, $timeout) {
     $scope.studentHeading = "Please fill the informations"; // Form Heading
     $scope.student = {};
     $scope.studentArr = [];
@@ -11,6 +11,9 @@ app.controller('indexCtrl', ['$scope', 'indexService', function($scope, $indexSe
         showEditBtn : true,
         showDeleteBtn : true
     };
+
+	$scope.showDeletedMsz = false;
+
 	$scope.searchText = "";
 
     $scope.gender = [ "female", "male"]; // Select array
@@ -28,9 +31,12 @@ app.controller('indexCtrl', ['$scope', 'indexService', function($scope, $indexSe
 	// Delete functionality(On the basis of Modal)
 	$scope.showDeleteModal = function(index){
 		$('#deleteModal').modal();
-
 		$scope.deleteFunc = function(){
 			$scope.studentArr = $indexService.delete($scope.studentArr, index);
+			$scope.showDeletedMsz = true;
+			$timeout(function(){
+				$scope.showDeletedMsz = false;
+			}, 3000);
 		};
 	};
 

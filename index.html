@@ -11,8 +11,8 @@
 </head>
 <body ng-controller="indexCtrl">
 <div class="container">
-    <h1>{{studentHeading}}</h1>
-    <form name="myForm">
+    <h1 ng-cloak>{{studentHeading}}</h1>
+    <form name="myForm" class="form-group" ng-cloak>
         <div class="form-group">
             <label for="inputName">Name</label>
             <input type="text" name="firstName" class="form-control" id="inputName" placeholder="Name" ng-model="student.firstName" ng-minlength="5" required>
@@ -39,12 +39,18 @@
         </div>
         <button type="submit" class="btn btn-primary" ng-show="booleanObj.showSaveBtn" ng-disabled="myForm.$invalid || myForm.$pending" ng-click="saveFunc($index)">Save</button>
         <div ng-show="booleanObj.showUpdateBtn">
-            <button type="submit" class="btn btn-primary" ng-disabled="myForm.$invalid || myForm.$pending" ng-click="updateFunc(student)">Update</button>
+            <button type="submit" class="btn btn-primary" ng-disabled="myForm.$invalid || myForm.$pending" ng-click="updateFunc(student)"  ng-cloak>Update</button>
         </div>
         
     </form>
 
-    <div ng-show="studentArr.length > 0 ">
+    <!--alert message on deleteing-->
+    <div class="alert alert-success" ng-show="showDeletedMsz" ng-cloak>
+        <strong>Congrats!</strong> Deleted successfully...
+    </div>
+
+    <!--table-->
+    <div ng-show="studentArr.length > 0 " ng-cloak>
         <div class="row">
             <div class="col-md-6">
                 <h1>Information of students</h1>
@@ -82,7 +88,7 @@
 </div>
 
 <!-- Modal -->
-<div id="deleteModal" class="modal fade" role="dialog">
+<div id="deleteModal" class="modal fade" role="dialog" ng-cloak>
     <div class="modal-dialog">
         <!-- Modal content-->
         <div class="modal-content">
