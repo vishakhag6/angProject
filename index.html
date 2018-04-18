@@ -39,7 +39,7 @@
         </div>
         <button type="submit" class="btn btn-primary" ng-show="booleanObj.showSaveBtn" ng-disabled="myForm.$invalid || myForm.$pending" ng-click="saveFunc()">Save</button>
         <div ng-show="booleanObj.showUpdateBtn">
-            <button type="submit" class="btn btn-primary" ng-disabled="myForm.$invalid || myForm.$pending" ng-click="updateFunc(student)"  ng-cloak>Update</button>
+            <button type="submit" class="btn btn-primary" ng-disabled="myForm.$invalid || myForm.$pending" ng-click="updateFunc(student, indexVar)"  ng-cloak>Update</button>
         </div>
         
     </form>
@@ -70,7 +70,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="student in studentArr | filter : search track by $index">
+            <tr ng-repeat="student in (studentArr | filter : search) track by $index ">
                 <td>{{$index + 1}}</td>
                 <td>{{student.firstName}}</td>
                 <td>{{student.emailValue}}</td>
@@ -78,7 +78,7 @@
                 <td>
                     <button type="submit" class="btn btn-danger" data-toggle="modal"
                             ng-show="booleanObj.showDeleteBtn" ng-click="showDeleteModal($index)">Delete</button>
-                    <button type="submit" ng-show="booleanObj.showEditBtn" class="btn btn-primary" ng-click="onEditFunc(student)">Edit</button>
+                    <button type="submit" ng-show="booleanObj.showEditBtn" class="btn btn-primary" ng-click="onEditFunc(student, $index)">Edit</button>
                     <button type="submit" ng-show="booleanObj.showCancelBtn" class="btn btn-info" ng-click="onCancelFunc()">Cancel</button>
                 </td>
             </tr>

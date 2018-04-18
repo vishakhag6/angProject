@@ -19,15 +19,14 @@ app.controller('indexCtrl', ['$scope', 'indexService', '$timeout', function($sco
 
     $scope.gender = [ "female", "male"]; // Select array
 
-	$scope.userObj2 = {
-		"key" : "index key value"
-	};
+	$scope.indexVar = "";
 
     // Save functionality
     $scope.saveFunc = function(){
         $scope.studentArr = $indexService.save($scope.studentArr, $scope.student);
+
+		// Store in local storage
 		if (typeof(Storage) !== "undefined") {
-			// Store in local storage
 			localStorage.setItem("studentArr", JSON.stringify($scope.studentArr));
 		}
         $scope.student = {};
@@ -38,8 +37,9 @@ app.controller('indexCtrl', ['$scope', 'indexService', '$timeout', function($sco
 		$('#deleteModal').modal();
 		$scope.deleteFunc = function(){
 			$scope.studentArr = $indexService.delete($scope.studentArr, index);
+
+			// delete a particular value from object
 			if (typeof(Storage) !== "undefined") {
-				// delete a particular value from object
 				localStorage.removeItem("studentArr");
 				localStorage.setItem("studentArr", JSON.stringify($scope.studentArr));
 			}
@@ -51,9 +51,10 @@ app.controller('indexCtrl', ['$scope', 'indexService', '$timeout', function($sco
 	};
 
     // Edit functionality
-    $scope.onEditFunc = function(student) {
+    $scope.onEditFunc = function(student, index) {
         studentUpdate = angular.copy(student);
         $scope.student = studentUpdate;
+		$scope.indexVar = index;
         $scope.booleanObj = {
             showSaveBtn : false,
             showUpdateBtn : true,
@@ -64,8 +65,13 @@ app.controller('indexCtrl', ['$scope', 'indexService', '$timeout', function($sco
     };
 
     // Update functionality
-    $scope.updateFunc = function(student) {
-        $scope.studentArr = $indexService.update($scope.studentArr, student);
+    $scope.updateFunc = function(student, index) {
+        $scope.studentArr = $indexService.update($scope.studentArr, student, index);
+        console.log(index);
+		// Update in local storage
+		if (typeof(Storage) !== "undefined") {
+			localStorage.setItem("studentArr", JSON.stringify($scope.studentArr));
+		}
         $scope.student = {};
         $scope.booleanObj = {
             showSaveBtn : true,

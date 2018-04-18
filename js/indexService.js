@@ -17,8 +17,8 @@ app.service('indexService', function() {
     }
 
     // Update service
-    this.update = function(tempArr, tempObj) {
-        tempArr[tempObj.index] = tempObj;
+    this.update = function(tempArr, tempObj, tempIndex) {
+        tempArr[tempIndex] = tempObj;
         return tempArr;
     }
 });
