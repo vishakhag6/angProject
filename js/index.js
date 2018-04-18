@@ -26,6 +26,10 @@ app.controller('indexCtrl', ['$scope', 'indexService', '$timeout', function($sco
     // Save functionality
     $scope.saveFunc = function(){
         $scope.studentArr = $indexService.save($scope.studentArr, $scope.student);
+		if (typeof(Storage) !== "undefined") {
+			// Store in local storage
+			localStorage.setItem("studentArr", JSON.stringify($scope.studentArr));
+		}
         $scope.student = {};
     };
 
@@ -34,6 +38,11 @@ app.controller('indexCtrl', ['$scope', 'indexService', '$timeout', function($sco
 		$('#deleteModal').modal();
 		$scope.deleteFunc = function(){
 			$scope.studentArr = $indexService.delete($scope.studentArr, index);
+			if (typeof(Storage) !== "undefined") {
+				// delete a particular value from object
+				localStorage.removeItem("studentArr");
+				localStorage.setItem("studentArr", JSON.stringify($scope.studentArr));
+			}
 			$scope.showDeletedMsz = true;
 			$timeout(function(){
 				$scope.showDeletedMsz = false;
@@ -86,5 +95,10 @@ app.controller('indexCtrl', ['$scope', 'indexService', '$timeout', function($sco
 			return true;
 		}
 	};
+
+	function init(){
+		$scope.studentArr = JSON.parse(localStorage.getItem("studentArr")) || [];
+	}
+	init();
 }]);
 

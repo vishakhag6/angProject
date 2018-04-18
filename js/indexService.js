@@ -6,7 +6,6 @@ app.service('indexService', function() {
 
     // Save service
     this.save = function(tempArr, tempObj){
-        tempObj.index = tempArr.length;
         tempArr.push(tempObj);
         return tempArr;
     }

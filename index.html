@@ -37,7 +37,7 @@
                 <option value="" hidden selected>Please select your Gender</option>          
             </select>
         </div>
-        <button type="submit" class="btn btn-primary" ng-show="booleanObj.showSaveBtn" ng-disabled="myForm.$invalid || myForm.$pending" ng-click="saveFunc($index)">Save</button>
+        <button type="submit" class="btn btn-primary" ng-show="booleanObj.showSaveBtn" ng-disabled="myForm.$invalid || myForm.$pending" ng-click="saveFunc()">Save</button>
         <div ng-show="booleanObj.showUpdateBtn">
             <button type="submit" class="btn btn-primary" ng-disabled="myForm.$invalid || myForm.$pending" ng-click="updateFunc(student)"  ng-cloak>Update</button>
         </div>
@@ -70,8 +70,8 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="student in studentArr | filter : search">
-                <td>{{student.index+1}}</td>
+            <tr ng-repeat="student in studentArr | filter : search track by $index">
+                <td>{{$index + 1}}</td>
                 <td>{{student.firstName}}</td>
                 <td>{{student.emailValue}}</td>
                 <td>{{student.selectedGen}}</td>
