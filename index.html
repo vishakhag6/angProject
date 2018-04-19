@@ -7,9 +7,14 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Angular Crud</title>
     <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link rel="stylesheet" href="node_modules/materialize-css/dist/css/materialize.min.css">
     <link rel="stylesheet" href="./style.css">
 </head>
 <body ng-controller="indexCtrl">
+
+<!--hero banner -->
+<hero-banner-directive></hero-banner-directive>
+
 <div class="container">
     <h1 ng-bind="mainHeadingMessage"></h1>
     <form name="myForm" class="form-group" ng-cloak>
@@ -87,6 +92,9 @@
     </div>
 </div>
 
+<!--hero banner -->
+<!--<hero-banner-directive></hero-banner-directive>-->
+
 <!-- Modal -->
 <div id="deleteModal" class="modal fade" role="dialog" ng-cloak>
     <div class="modal-dialog">
@@ -107,6 +115,7 @@
 <script src="node_modules/jquery/dist/jquery.min.js"></script>
 <script src="node_modules/angular/angular.min.js"></script>
 <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="node_modules/materialize-css/dist/js/materialize.min.js"></script>
 <script src="js/indexService.js"></script>
 <script src="js/index.js"></script>
 <script src="js/header.js"></script>

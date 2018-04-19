@@ -1,4 +1,4 @@
-var app = angular.module('indexApp',['commonService']);
+var app = angular.module('indexApp',['commonService', 'heroBanner']);
 app.controller('indexCtrl', ['$scope', 'indexService', '$timeout', function($scope, $indexService, $timeout) {
 
 	$scope.mainHeadingMessage = $indexService.mainHeading; // Heading form service(data sharing)
@@ -51,7 +51,7 @@ app.controller('indexCtrl', ['$scope', 'indexService', '$timeout', function($sco
 	};
 
     // Edit functionality
-    $scope.onEditFunc = function(student, index) {
+    $scope.onEditFunc = function(student, index) {ppPppPpPp
         studentUpdate = angular.copy(student);
         $scope.student = studentUpdate;
 		$scope.indexVar = index;
@@ -107,4 +107,3 @@ app.controller('indexCtrl', ['$scope', 'indexService', '$timeout', function($sco
 	}
 	init();
 }]);
-
