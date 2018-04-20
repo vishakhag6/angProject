@@ -1,6 +1,6 @@
 var app = angular.module("heroBanner", []);
 
-app.controller('heroBannerController', ['$scope', function ($scope) {
+app.controller('heroBannerController', ['$scope', '$interval', function ($scope, $interval) {
 	$scope.imageObj = {
 		src : 'images/background1.jpg',
 		alt : 'Hero Banner',
@@ -12,9 +12,12 @@ app.controller('heroBannerController', ['$scope', function ($scope) {
 		alt : 'Footer banner',
 		desc : 'My footer desc',
 		myName : "Vishakha Nehe"
-	}
+	},
 
-	// $scope.myName = "Vishakha Nehe"
+	$interval(function(){
+		$scope.imageObj.src = $scope.imageObj.src === 'images/background1.jpg' ? 'images/background3.jpg' : 'images/background1.jpg';
+	}, 3000);
+
 }]);
 
 app.directive("heroBannerDirective", function() {

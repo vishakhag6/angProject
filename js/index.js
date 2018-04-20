@@ -6,7 +6,7 @@ app.controller('indexCtrl', ['$scope', 'indexService', '$timeout', function($sco
 
     $scope.$on('onFinishRender',function(){
     	$('select').formSelect();
-	})
+	});
 
     $scope.studentArr = [];
     var studentUpdate = {};
@@ -118,10 +118,10 @@ app.controller('indexCtrl', ['$scope', 'indexService', '$timeout', function($sco
 	};
 
 	function init(){
-		// $('select').formSelect();
 		$scope.studentArr = JSON.parse(localStorage.getItem("studentArr")) || [];
 	}
 	init();
+
 }]).directive('onFinishRender', function ($timeout) {
 	return {
 		restrict: 'A',
