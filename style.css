@@ -92,3 +92,9 @@ p {
 footer.page-footer {
     margin: 0;
 }
+
+.deletedMsz {
+    padding: 24px;
+    margin-top: 40px;
+    border-radius: 8px;
+}

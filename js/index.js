@@ -3,6 +3,11 @@ app.controller('indexCtrl', ['$scope', 'indexService', '$timeout', function($sco
 
 	$scope.mainHeadingMessage = $indexService.mainHeading; // Heading form service(data sharing)
     $scope.student = {};
+
+    $scope.$on('onFinishRender',function(){
+    	$('select').formSelect();
+	})
+
     $scope.studentArr = [];
     var studentUpdate = {};
     $scope.booleanObj = {
@@ -21,6 +26,7 @@ app.controller('indexCtrl', ['$scope', 'indexService', '$timeout', function($sco
 
 	$scope.indexVar = "";
 
+
     // Save functionality
     $scope.saveFunc = function(){
         $scope.studentArr = $indexService.save($scope.studentArr, $scope.student);
@@ -34,7 +40,11 @@ app.controller('indexCtrl', ['$scope', 'indexService', '$timeout', function($sco
 
 	// Delete functionality(On the basis of Modal)
 	$scope.showDeleteModal = function(index){
-		$('#deleteModal').modal();
+		// $('#deleteModal').modal();
+		var elem = document.querySelector('#deleteModal');
+		var instance = M.Modal.init(elem);
+		instance.open();
+
 		$scope.deleteFunc = function(){
 			$scope.studentArr = $indexService.delete($scope.studentArr, index);
 
@@ -47,6 +57,8 @@ app.controller('indexCtrl', ['$scope', 'indexService', '$timeout', function($sco
 			$timeout(function(){
 				$scope.showDeletedMsz = false;
 			}, 3000);
+
+			instance.close();
 		};
 	};
 
@@ -84,6 +96,9 @@ app.controller('indexCtrl', ['$scope', 'indexService', '$timeout', function($sco
 
     // Cancel functionality
     $scope.onCancelFunc = function() {
+		var elem = document.querySelector('#deleteModal');
+		var instance = M.Modal.init(elem);
+		instance.close();
         $scope.student = {};
         $scope.booleanObj = {
             showSaveBtn : true,
@@ -103,7 +118,19 @@ app.controller('indexCtrl', ['$scope', 'indexService', '$timeout', function($sco
 	};
 
 	function init(){
+		// $('select').formSelect();
 		$scope.studentArr = JSON.parse(localStorage.getItem("studentArr")) || [];
 	}
 	init();
-}]);
+}]).directive('onFinishRender', function ($timeout) {
+	return {
+		restrict: 'A',
+		link: function (scope, element, attr) {
+			if (scope.$last === true) {
+				$timeout(function () {
+					scope.$emit(attr.onFinishRender);
+				});
+			}
+		}
+	}
+});
