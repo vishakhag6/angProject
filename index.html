@@ -12,8 +12,10 @@
 </head>
 <body ng-controller="indexCtrl">
 
-<!--hero banner -->
-<hero-banner-directive></hero-banner-directive>
+<div ng-controller="heroBannerController">
+    <!--hero banner -->
+    <hero-banner-directive src="imageObj"></hero-banner-directive>
+</div>
 
 <div class="container">
     <h1 ng-bind="mainHeadingMessage"></h1>
@@ -92,8 +94,11 @@
     </div>
 </div>
 
-<!--hero banner -->
-<!--<hero-banner-directive></hero-banner-directive>-->
+
+<div ng-controller="heroBannerController">
+    <!--hero banner footer-->
+    <hero-banner-directive src="imageObjFooter"></hero-banner-directive>
+</div>
 
 <!-- Modal -->
 <div id="deleteModal" class="modal fade" role="dialog" ng-cloak>

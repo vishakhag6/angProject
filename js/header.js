@@ -1,6 +1,17 @@
 var app = angular.module("heroBanner", []);
 
-
+app.controller('heroBannerController', ['$scope', function ($scope) {
+	$scope.imageObj = {
+		src : 'images/background1.jpg',
+		alt : 'Hero Banner',
+		desc : 'Angular Crud App'
+	},
+	$scope.imageObjFooter = {
+		src : 'images/background2.jpg',
+		alt : '',
+		desc : 'My footer desc'
+	}
+}]);
 
 app.directive("heroBannerDirective", function() {
 	return {
@@ -11,20 +22,21 @@ app.directive("heroBannerDirective", function() {
 							<br><br>
 							<h1 class="header center teal-text text-lighten-2">Welcome!!!!</h1>
 							<div class="row center">
-							  <h5 class="header col s12 light">It is a crud application.</h5>
+							  <h2 class="header col s12 light" ng-if="asa.desc">{{asa.desc}}</h2>
 							</div>   
 						  </div>
 						</div>
 						<div class="parallax">
-							<img>
+							<img src="{{asa.src}}">
 						</div>
 					</div>
-					`
-		,
+					`,
+		scope : {
+			asa : '=src'
+		},
 
 		link : function(scope, element, attribute) {
-					element[0].querySelector('.parallax > img').src = "images/background1.jpg";
-					$('.parallax').parallax();
+				$('.parallax').parallax();
 		}
 	};
 });
