@@ -51,7 +51,7 @@ app.controller('indexCtrl', ['$scope', 'indexService', '$timeout', function($sco
 	};
 
     // Edit functionality
-    $scope.onEditFunc = function(student, index) {ppPppPpPp
+    $scope.onEditFunc = function(student, index) {
         studentUpdate = angular.copy(student);
         $scope.student = studentUpdate;
 		$scope.indexVar = index;
