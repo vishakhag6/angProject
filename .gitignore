@@ -9,7 +9,7 @@ db/
 #ignore any log files
 *.log
 
-#ignore phpstorm files 
+#ignore phpstorm files
 .idea/
 
 .DS_Store
