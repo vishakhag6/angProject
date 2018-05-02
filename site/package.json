@@ -13,5 +13,8 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Nehe",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "angular-route": "^1.6.10"
+  }
 }

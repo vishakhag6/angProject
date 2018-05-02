@@ -1,4 +1,24 @@
-var app = angular.module('indexApp',['commonService', 'heroBanner']);
+var app = angular.module('indexApp',['commonService', 'heroBanner', 'ngRoute']);
+app.config(function($routeProvider, $locationProvider) {
+	$routeProvider
+		.when("/", {
+			templateUrl : "home.html",
+			controller : "indexCtrl"
+		})
+		.when("/about", {
+			templateUrl : "about.html",
+			controller : "aboutCtrl"
+		})
+		.when("/contact", {
+			templateUrl : "contact.html",
+			controller : "contactCtrl"
+		})
+		.otherwise({
+			templateUrl : "home.html"
+		});
+	$locationProvider.html5Mode(true);
+});
+
 app.controller('indexCtrl', ['$scope', 'indexService', '$timeout', function($scope, $indexService, $timeout) {
 
 	$scope.mainHeadingMessage = $indexService.mainHeading; // Heading form service(data sharing)
@@ -168,10 +188,21 @@ app.controller('userCtrl', ['$scope', '$http',  function($scope, $http) {
 
 		console.log(response.data);
 		$scope.users = response.data.data;
+		// $scope.name = response.data.data.map(function(item){return item.first_name});
+		// console.log($scope.name);
 
 	}, function errorCB(response){
 		$scope.myError = response.data;
 		console.log($scope.myError );
 	});
 
+}]);
+
+
+app.controller('aboutCtrl', ['$scope', function($scope) {
+	$scope.name = "about works";
+}]);
+
+app.controller('contactCtrl', ['$scope', function($scope) {
+	$scope.name = "Contact works";
 }]);
