@@ -8,9 +8,9 @@ app.set('port', PORT);
 
 app.use(express.static(__dirname + '/site'));
 
-app.get("/",function(req,res){
-	return res.redirect("/index.html");
-})
+app.all('/*', function(req, res, next) {
+	res.sendFile('index.html', { root: __dirname + "/site" });
+});
 
 var server = app.listen(app.get('port'), function() {
 	var port = server.address().port;
