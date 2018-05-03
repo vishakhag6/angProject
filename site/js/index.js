@@ -199,10 +199,12 @@ app.controller('userCtrl', ['$scope', '$http',  function($scope, $http) {
 }]);
 
 
-app.controller('aboutCtrl', ['$scope', function($scope) {
+app.controller('aboutCtrl', ['$scope', 'indexService', function($scope, $indexService) {
 	$scope.name = "about works";
+	$scope.sharedHeadingMessage = $indexService.sharedHeading;
 }]);
 
-app.controller('contactCtrl', ['$scope', function($scope) {
+app.controller('contactCtrl', ['$scope', 'indexService', function($scope, $indexService) {
 	$scope.name = "Contact works";
+	$scope.sharedHeadingMessage = $indexService.sharedHeading;
 }]);
