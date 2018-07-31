@@ -13,12 +13,12 @@
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "git+https://github.com/vishakhag6/cardValidation.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": ""
+    "url": "https://github.com/vishakhag6/cardValidation/issues"
   },
-  "homepage": ""
+  "homepage": "https://github.com/vishakhag6/cardValidation#readme"
 }
