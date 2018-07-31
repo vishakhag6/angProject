@@ -1,127 +1,101 @@
 <div class="min-height">
-    <div ng-controller="heroBannerController">
-        <!--hero banner -->
-        <hero-banner-directive src="imageObj" alt="imageObj"></hero-banner-directive>
-    </div>
-
-    <div class="container">
-        <h1 ng-bind="mainHeadingMessage"></h1>
-        <form name="myForm" class="form-group" ng-cloak>
-            <div class="input-field">
-                <i class="material-icons prefix">account_circle</i>
-                <input id="inputName" type="text" name="firstName" ng-model="student.firstName" ng-minlength="5" required>
-                <label for="inputName">Name</label>
-                <span class="red-text text-darken-1" ng-show="myForm.firstName.$error.required">Name is required</span>
-                <span class="red-text text-darken-1" ng-show="myForm.firstName.$error.minlength">Minlength 5 is required</span>
-            </div>
-
-            <div class="input-field">
-                <i class="material-icons prefix">email</i>
-                <input id="inputEmail" type="email" name="emailValue" ng-model="student.emailValue" required>
-                <label for="inputEmail">Email</label>
-                <span class="red-text text-darken-1" ng-show="myForm.emailValue.$error.required">Email is required</span>
-                <span class="red-text text-darken-1" ng-show="myForm.emailValue.$error.pattern">Not a valid email</span>
-            </div>
-
-            <div class="input-field">
-                <i class="material-icons prefix">create</i>
-                <input id="inputPassword" type="password" name="passwordValue" ng-model="student.passwordValue" required>
-                <label for="inputPassword">Password</label>
-                <span class="red-text text-darken-1" ng-show="myForm.passwordValue.$error.required">Password is required</span>
-                <span class="red-text text-darken-1" ng-show="myForm.passwordValue.$error.pattern">Please enter </span>
-            </div>
-
-            <div class="input-field">
-                <i class="material-icons prefix">&#xE87C;</i>
-                <select ng-model="student.selectedGen">
-                    <option value="" hidden selected>Please select</option>
-                    <option ng-repeat="gen in gender" on-finish-render="onFinishRender">{{gen}}</option>
-                </select>
-                <label>Gender</label>
-            </div>
-
-            <button type="submit" class="btn teal lighten-2" ng-show="booleanObj.showSaveBtn" ng-disabled="myForm.$invalid || myForm.$pending" ng-click="saveFunc()">Save</button>
-            <div ng-show="booleanObj.showUpdateBtn">
-                <button type="submit" class="btn teal lighten-2" ng-disabled="myForm.$invalid || myForm.$pending" ng-click="updateFunc(student, indexVar)"  ng-cloak>Update</button>
-            </div>
-
-        </form>
-
-        <!--alert message on deleteing-->
-        <div class="red lighten-3 deletedMsz" ng-show="showDeletedMsz" ng-cloak>
-            <strong>Congrats!</strong> Deleted successfully...
-        </div>
-
-        <!--table-->
-        <div ng-show="studentArr.length > 0 " ng-cloak>
-            <div>
-                <h2>Information of students</h2>
-                <input class="form-control margin-t24" ng-model="searchText" type="text" placeholder="Search by Name & Email">
-            </div>
-            <table class="table highlight responsive-table" width="100%">
-                <thead>
-                <tr>
-                    <th>NO.</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Gender</th>
-                    <th>Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="student in (studentArr | filter : search) track by $index ">
-                    <td>{{$index + 1}}</td>
-                    <td>{{student.firstName}}</td>
-                    <td>{{student.emailValue}}</td>
-                    <td>{{student.selectedGen}}</td>
-                    <td>
-                        <button type="submit" class="btn red lighten-3" data-toggle="modal"
-                                ng-show="booleanObj.showDeleteBtn" ng-click="showDeleteModal($index)">Delete</button>
-                        <button type="submit" ng-show="booleanObj.showEditBtn" class="btn teal lighten-2" ng-click="onEditFunc(student, $index)">Edit</button>
-                        <button type="submit" ng-show="booleanObj.showCancelBtn" class="btn grey darken-3" ng-click="onCancelFunc()">Cancel</button>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <!--starts: card carausal-->
-    <div ng-controller="userCtrl">
-        <div class="container">
-            <div class="row">
-                <div class="col s12 m4" ng-repeat="user in users">
-                    <div class="card">
-                        <div class="card-image">
-                            <img src="{{userDataObj[$index]}}">
-                            <span class="card-title">{{user.first_name}}</span>
-                        </div>
-                        <div class="card-content">
-                            <p>I am a very simple card. I am good at containing small bits of information.
-                                I am convenient because I require little markup to use effectively.</p>
-                        </div>
-                        <div class="card-action">
-                            <a href="javascript:void(0);">This is a link</a>
+    <h5 class="text-center">{{mainHeading}}</h5>
+    <div class="row">
+        <div class="col s12 m6">
+          <div class="card">
+            <div class="card-content">
+                <form name="myForm" class="form-group" novalidate ng-cloak>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <div class="card-img-list">
+                                <i class="fa fa-2x fa-cc-{{card.activeImg}}" 
+                                    ng-show="myForm.cardNumber.$valid"></i>
+                            </div>
+                            <input id="cardNumber" type="text" name="cardNumber" class="validate margin-b0"
+                                ng-model="card.cardNumber"
+                                ng-change="analyze(card.cardNumber)" 
+                                ng-minlength = {{minlength}} required>
+                            <label for="cardNumber">Card Number</label>
+                            <span class="red-text text-darken-1" ng-show="myForm.cardNumber.$error.required">Card is required</span>
+                            <span class="red-text text-darken-1" ng-show="myForm.cardNumber.$error.minlength">Min {{minlength}} is required</span>
                         </div>
                     </div>
-                </div>
+
+                    <div class="row">
+                        <label class="col s12">Expiry</label>
+                        <div class="input-field col s3">
+                            <select>
+                                <option value="" hidden selected>MM</option>
+                                <option ng-repeat="m in month" on-finish-render="onFinishRender">{{m}}</option>
+                            </select>
+                        </div>
+
+                        <div class="input-field col s4">
+                            <select>
+                                <option value="" hidden selected>YYYY</option>
+                                <option ng-repeat="y in year" on-finish-render="onFinishRender">{{y}}</option>
+                            </select>
+                        </div>
+
+                        <div class="input-field col s5">
+                            <input id="cvvNumber" type="password" class="validate" ng-model="card.cvvNumber">
+                            <label for="cvvNumber">CVV</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <a class="waves-effect waves-light btn col s12" 
+                            ng-show="booleanObj.showSaveBtn"
+                            ng-disabled="myForm.$invalid || myForm.$pending"
+                            ng-click="saveFunc()">Submit</a>
+
+                        <div ng-show="booleanObj.showUpdateBtn">
+                            <a class="waves-effect waves-light btn col s12" 
+                                ng-disabled="myForm.$invalid || myForm.$pending" 
+                                ng-click="updateFunc(card, indexVar)"  ng-cloak>Update</a>
+                        </div>
+                    </div>
+                </form>
             </div>
+          </div>  
         </div>
     </div>
-    <!--end: card carausal-->
 
-    <div ng-controller="heroBannerController">
-        <!--hero banner footer-->
-        <hero-banner-directive src="imageObjFooter" alt="imageObjFooter" my-name="{{myName}}"></hero-banner-directive>
+    <!--alert message on deleteing-->
+    <div class="red lighten-3 deletedMsz" ng-show="showDeletedMsz" ng-cloak>
+        <strong>Congrats!</strong> Deleted successfully...
     </div>
 
+    <!--table-->
+    <div ng-show="cardArr.length > 0">
+        <div>
+            <h5>Saved Card</h5>
+        </div>
+        <table class="table highlight responsive-table" width="100%">
+            <thead>
+            <tr>
+                <th>City Card</th>
+                <th>Card No.</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="card in cardArr track by $index">
+                <td style="display: none;">{{$index + 1}}</td>
+                <!-- <td><img ng-src="../images/{{card.activeImg}}" alt="" width="40"></td> -->
+                <td> <i class="fa fa-2x fa-cc-{{card.activeImg}}"></i></td>
+                <td>{{card.cardNumber}}</td>
+                <td>
+                    <button type="submit" class="btn red lighten-3" data-toggle="modal"
+                            ng-show="booleanObj.showDeleteBtn" ng-click="showDeleteModal($index)">Delete</button>
+                    <button type="submit" ng-show="booleanObj.showEditBtn" class="btn teal lighten-2" ng-click="onEditFunc(card, $index)">Edit</button>
+                    <button type="submit" ng-show="booleanObj.showCancelBtn" class="btn grey darken-3" ng-click="onCancelFunc()">Cancel</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 
-    <!--back to top-->
-    <a class="btn-floating waves-effect waves-light lighten-2 red back-to-top" ng-click="scrollToTop()">
-        <i class="material-icons">keyboard_arrow_up</i>
-    </a>
-
-    <!-- Modal -->
     <div id="deleteModal" class="modal" ng-cloak>
         <div class="modal-content">
             <h4>Do you want to Delete?</h4>
@@ -131,5 +105,4 @@
             <button class="btn teal lighten-2 modal-action modal-close waves-effect waves-green btn-flat" type="button" >No</button>
         </div>
     </div>
-
 </div>

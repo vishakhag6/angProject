@@ -1,5 +1,5 @@
 {
-  "name": "angularcrud",
+  "name": "cardValidation",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -13,12 +13,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vishakhag6/angularCrud.git"
+    "url": ""
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/vishakhag6/angularCrud/issues"
+    "url": ""
   },
-  "homepage": "https://github.com/vishakhag6/angularCrud#readme"
+  "homepage": ""
 }

@@ -10,3 +10,10 @@ node server.js
 or
 nodemon server.js
 ```
+
+Now go to the site folder and run:
+
+```
+npm install
+
+```
