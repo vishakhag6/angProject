@@ -1,9 +1,17 @@
-var app = angular.module('cardApp',['commonService', 'ngRoute']);
+var app = angular.module('indexApp',['commonService', 'heroBanner', 'ngRoute']);
 app.config(function($routeProvider, $locationProvider) {
 	$routeProvider
 		.when("/", {
 			templateUrl : "home.html",
-			controller : "cardCtrl"
+			controller : "indexCtrl"
+		})
+		.when("/about", {
+			templateUrl : "about.html",
+			controller : "aboutCtrl"
+		})
+		.when("/contact", {
+			templateUrl : "contact.html",
+			controller : "contactCtrl"
 		})
 		.otherwise({
 			templateUrl : "home.html"
@@ -11,84 +19,48 @@ app.config(function($routeProvider, $locationProvider) {
 	$locationProvider.html5Mode(true);
 });
 
-app.controller('cardCtrl', ['$scope', 'cardService', '$timeout', function($scope, $cardService, $timeout) {
-	$scope.mainHeading = "Save My Card";
-	$scope.cardArr = [];
-	$scope.card = {
-		cardNumber: '',
-		cardImage: {
-			visa: '',
-			mastercard: '',
-			amex: '',
-		},
-		activeImg: ''
-	};
-	var cardUpdate =  {};
-	$scope.booleanObj = {
+app.controller('indexCtrl', ['$scope', 'indexService', '$timeout', function($scope, $indexService, $timeout) {
+
+	$scope.mainHeadingMessage = $indexService.mainHeading; // Heading form service(data sharing)
+    $scope.student = {};
+
+    $scope.$on('onFinishRender',function(){
+    	$('select').formSelect();
+	});
+
+    $scope.studentArr = [];
+    var studentUpdate = {};
+    $scope.booleanObj = {
         showSaveBtn : true,
         showUpdateBtn : false,
         showCancelBtn : false,
         showEditBtn : true,
         showDeleteBtn : true
-	};
-	
+    };
+
 	$scope.showDeletedMsz = false;
+
+	$scope.searchText = "";
+
+    $scope.gender = [ "female", "male"]; // Select array
+
 	$scope.indexVar = "";
 
-	$scope.month = [ "Jan", "Feb", "March", "April", "May", "June", "July", "August", "Sep", "Oct", "Nov", "Dec"]; // Select array
-	$scope.year = [ 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034, 2035, 2036, 2037, 2038, 2039, 2040]; // Select array
-
-
-	var visa = new RegExp("^4[0-9]{12}(?:[0-9]{3})?$");
-	var amex = new RegExp("^3[47][0-9]{13}$");
-	var mastercard = new RegExp("^5[1-5][0-9]{14}$");
-
-	$scope.analyze = function(value) {
-		//Number spacing
-		document.getElementById('cardNumber').addEventListener('input', function (e) {
-			e.target.value = e.target.value.replace(/[^\dA-Z]/g, '').replace(/(.{4})/g, '$1 ').trim();
-		});
-
-		
-		if(visa.test(value)) {
-			$scope.card.activeImg = 'visa';
-			$scope.minlength = 13;
-		}
-
-		else if(amex.test(value)) {
-			$scope.card.activeImg = 'amex';
-			$scope.minlength = 15;
-		}
-
-		else if(mastercard.test(value)) {
-			$scope.card.activeImg = 'mastercard';
-			$scope.minlength = 16;
-		}
-	};
-
-	$scope.$on('onFinishRender',function(){
-    	$('select').formSelect();
-	});
+	$scope.userDataObj = [
+		'http://res.cloudinary.com/vishakhanehe/image/upload/v1491620696/san_myugdd.jpg',
+		'http://res.cloudinary.com/vishakhanehe/image/upload/v1491620687/paris_rytltc.jpg',
+		'http://res.cloudinary.com/vishakhanehe/image/upload/v1491620686/NY_arfrud.jpg'
+	];
 
     // Save functionality
-	$scope.saveFunc = function(){
-		var	add = true;
-		for(var i = 0; i < $scope.cardArr.length; i++) {
-			if($scope.cardArr[i].id  == $scope.card.id) {
-				add = false;
-			}
-		}	
-		if(add == true ){
-			$scope.cardArr = $cardService.save($scope.cardArr, $scope.card);
-			console.log($scope.cardArr);
-			document.querySelector("label").classList.remove("active");
-			if (typeof(Storage) !== "undefined") {
-				localStorage.setItem("cardArr", JSON.stringify($scope.cardArr));
-				
-			}
-			$scope.card = {};
-			$scope.minlength = 0;	
+    $scope.saveFunc = function(){
+        $scope.studentArr = $indexService.save($scope.studentArr, $scope.student);
+
+		// Store in local storage
+		if (typeof(Storage) !== "undefined") {
+			localStorage.setItem("studentArr", JSON.stringify($scope.studentArr));
 		}
+        $scope.student = {};
     };
 
 	// Delete functionality(On the basis of Modal)
@@ -98,12 +70,12 @@ app.controller('cardCtrl', ['$scope', 'cardService', '$timeout', function($scope
 		instance.open();
 
 		$scope.deleteFunc = function(){
-			$scope.cardArr = $cardService.delete($scope.cardArr, index);
+			$scope.studentArr = $indexService.delete($scope.studentArr, index);
 
 			// delete a particular value from object
 			if (typeof(Storage) !== "undefined") {
-				localStorage.removeItem("cardArr");
-				localStorage.setItem("cardArr", JSON.stringify($scope.cardArr));
+				localStorage.removeItem("studentArr");
+				localStorage.setItem("studentArr", JSON.stringify($scope.studentArr));
 			}
 			$scope.showDeletedMsz = true;
 			$timeout(function(){
@@ -115,10 +87,9 @@ app.controller('cardCtrl', ['$scope', 'cardService', '$timeout', function($scope
 	};
 
     // Edit functionality
-    $scope.onEditFunc = function(card, index) {
-		document.querySelector("label").classList.add("active");
-        cardUpdate = angular.copy(card);
-		$scope.card = cardUpdate;
+    $scope.onEditFunc = function(student, index) {
+        studentUpdate = angular.copy(student);
+        $scope.student = studentUpdate;
 		$scope.indexVar = index;
         $scope.booleanObj = {
             showSaveBtn : false,
@@ -130,14 +101,14 @@ app.controller('cardCtrl', ['$scope', 'cardService', '$timeout', function($scope
     };
 
     // Update functionality
-    $scope.updateFunc = function(card, index) {
-		document.querySelector("label").classList.remove("active");
-        $scope.cardArr = $cardService.update($scope.cardArr, card, index);
+    $scope.updateFunc = function(student, index) {
+        $scope.studentArr = $indexService.update($scope.studentArr, student, index);
         console.log(index);
+		// Update in local storage
 		if (typeof(Storage) !== "undefined") {
-			localStorage.setItem("cradArr", JSON.stringify($scope.cardArr));
+			localStorage.setItem("studentArr", JSON.stringify($scope.studentArr));
 		}
-        $scope.card = {};
+        $scope.student = {};
         $scope.booleanObj = {
             showSaveBtn : true,
             showUpdateBtn : false,
@@ -149,25 +120,47 @@ app.controller('cardCtrl', ['$scope', 'cardService', '$timeout', function($scope
 
     // Cancel functionality
     $scope.onCancelFunc = function() {
-		document.querySelector("label").classList.remove("active");
 		var elem = document.querySelector('#deleteModal');
 		var instance = M.Modal.init(elem);
 		instance.close();
-        $scope.card = {};
+        $scope.student = {};
         $scope.booleanObj = {
             showSaveBtn : true,
             showUpdateBtn : false,
             showCancelBtn : false,
             showEditBtn : true,
             showDeleteBtn : true
-		};
-		$scope.visa = { "display": "none" };
-		$scope.amex = { "display": "none" };
-		$scope.mastercard = { "display": "none" };
+        };
     };
 
+    // Search on the basis of name and email only
+	$scope.search = function(item) {
+		if((item.firstName.toLowerCase()).indexOf($scope.searchText.toLowerCase()) !== -1 ||
+			item.emailValue.indexOf($scope.searchText) !== -1) {
+			return true;
+		}
+	};
+
+
+	// On scroll show back to top button
+	$(window).scroll(function(){
+		if ($(window).scrollTop() <= 380) {
+			$('.back-to-top').fadeOut();
+		}
+		else {
+			$('.back-to-top').fadeIn();
+		}
+	});
+
+	// Scroll to top function
+	$scope.scrollToTop = function() {
+		$('html, body').animate({ scrollTop: 0 }, 'slow');
+	};
+
 	function init(){
-		$scope.cardArr = JSON.parse(localStorage.getItem("cardArr")) || [];
+		$scope.studentArr = JSON.parse(localStorage.getItem("studentArr")) || [];
+		// For carausal
+		$('.carousel').carousel();
 	}
 	init();
 
@@ -183,3 +176,35 @@ app.controller('cardCtrl', ['$scope', 'cardService', '$timeout', function($scope
 		}
 	}
 });
+
+
+app.controller('userCtrl', ['$scope', '$http',  function($scope, $http) {
+	$scope.userHeading = "Here comes the user entries";
+
+	$http({
+		method: 'GET',
+		url: 'https://reqres.in/api/users'
+	}).then(function successCB(response){
+
+		console.log(response.data);
+		$scope.users = response.data.data;
+		// $scope.name = response.data.data.map(function(item){return item.first_name});
+		// console.log($scope.name);
+
+	}, function errorCB(response){
+		$scope.myError = response.data;
+		console.log($scope.myError );
+	});
+
+}]);
+
+
+app.controller('aboutCtrl', ['$scope', 'indexService', function($scope, $indexService) {
+	$scope.name = "about works";
+	$scope.sharedHeadingMessage = $indexService.sharedHeading;
+}]);
+
+app.controller('contactCtrl', ['$scope', 'indexService', function($scope, $indexService) {
+	$scope.name = "Contact works";
+	$scope.sharedHeadingMessage = $indexService.sharedHeading;
+}]);

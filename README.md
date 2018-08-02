@@ -9,6 +9,8 @@ npm install
 node server.js
 or
 nodemon server.js
+or
+npm start
 ```
 
 Now go to the site folder and run:

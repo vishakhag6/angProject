@@ -1,5 +1,9 @@
 var app = angular.module('commonService',[]);
-app.service('cardService', function() {
+app.service('indexService', function() {
+
+    // main heading(for data sharing)
+	this.mainHeading = "Please fill the informations";
+	this.sharedHeading = "Sharing among all";
 
     // Save service
     this.save = function(tempArr, tempObj){
